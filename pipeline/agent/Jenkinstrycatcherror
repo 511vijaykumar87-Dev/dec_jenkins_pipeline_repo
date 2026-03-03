@@ -33,16 +33,8 @@ pipeline{
                     }
                  }
             }    
-        
+}    
 
-    stage('FINAL') {
-        steps{
-            echo "This is FINAL stage "
-                sh '''
-                    sleep 5
-                    echo "this is FINAL stage"
-                    '''
-                }
-            }
-}
+   
+
     
