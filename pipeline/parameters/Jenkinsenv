@@ -1,0 +1,25 @@
+pipeline {
+    agent none
+
+   environment {
+       DOCKER_USER = 'vijay'
+       AWS_ACCESS_KEY = '8989565499565457879'
+    }
+    
+    stages {
+        stage('STAGE1') {
+            
+            steps {
+               echo "NAME: ${ DOCKER_USER}"
+               echo "SKIP_TEST: ${AWS_ACCESS_KEY}"
+               echo "BRANCH TO DEPLOY: ${params.BRANCH}"
+
+               sh '''
+                    env
+                   '''
+
+            }
+        }
+        
+    }
+}
