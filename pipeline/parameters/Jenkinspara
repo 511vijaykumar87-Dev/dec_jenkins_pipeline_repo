@@ -1,0 +1,24 @@
+
+pipeline {
+    agent none
+
+    parameters{
+        string(name: 'NAME', defaultValue: '', description: 'please tell me your name?')
+        booleanParam(name: 'SKIP_TEST',  description: 'want to skip test')
+        choice(name: 'BRANCH', choice: ['master', 'stagging', 'prod'])
+    }
+    stages{
+        stage('STAGE1'){
+            steps{
+                echo "NAME: ${params.NAME}"
+                echo "SKIP_TEST: ${params.SKIP_TEST}"
+                echo "BRANCH:${params.BRANCH}"
+                   
+
+            }
+        }
+       
+
+    }
+
+}
