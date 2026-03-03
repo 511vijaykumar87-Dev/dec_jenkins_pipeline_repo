@@ -33,39 +33,7 @@ pipeline{
                     }
                  }
             }    
-        stage('PARALLEL TESTING') {
-             parallel{
-                stage('WINDOWS TESTING') { 
-                    steps {
-                        echo "this is WINDOWS"
-                        sh '''#!/bin/bash
-                         sleep 10
-                         '''
-                
-                    }            
-                }
-           
-                stage('MAC TESTING') { 
-                    steps {
-                    echo "this is MAC"
-                    sh '''#!/bin/bash
-                      sleep 10
-                      '''
-                    }
-                 
-                }
-                stage('LINUX TESTING') { 
-                    steps {
-                    echo "this is LINUX"
-                    sh '''#!/bin/bash
-                      sleep 10   
-                      '''            
-                    }
-               
-                }
-
-            }
-        }
+        
 
         stage('FINAL') {
             steps{
