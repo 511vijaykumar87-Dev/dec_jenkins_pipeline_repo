@@ -2,17 +2,21 @@
 pipeline {
     agent none
 
-    parameters{
+    parameters {
         string(name: 'NAME', defaultValue: '', description: 'please tell me your name?')
         booleanParam(name: 'SKIP_TEST',  description: 'want to skip test')
-        choice(name: 'BRANCH', choice: ['master', 'stagging', 'prod'])
+        choice(name: 'BRANCH', choice: ['master', 'stagging', 'prod'], description: '')
     }
     stages{
         stage('STAGE1'){
+
+            agent{
+                label 'slave1'
+            }
             steps{
                 echo "NAME: ${params.NAME}"
                 echo "SKIP_TEST: ${params.SKIP_TEST}"
-                echo "BRANCH:${params.BRANCH}"
+                echo "BRANCH TO DEPLOY: ${params.BRANCH}"
                    
 
             }
