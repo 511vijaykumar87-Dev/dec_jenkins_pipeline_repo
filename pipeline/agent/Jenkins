@@ -1,0 +1,58 @@
+pipeline{
+    agent any
+
+    stages{
+        stage('STAGE1') {
+            steps{
+                echo "This is stage 1"
+                sh '''
+                    sleep 5
+                    echo "this is stage1"
+                    '''
+                 }
+            }
+        stage('PARALLEL TESTING') {
+             parallel{
+                stage('WINDOWS TESTING') { 
+                    steps {
+                        echo "this is WINDOWS"
+                        sh '''#!/bin/bash
+                         sleep 10
+                         '''
+                
+                    }            
+                }
+           
+                stage('MAC TESTING') { 
+                    steps {
+                    echo "this is MAC"
+                    sh '''#!/bin/bash
+                      sleep 10
+                      '''
+                    }
+                 
+                }
+                stage('LINUX TESTING') { 
+                    steps {
+                    echo "this is LINUX"
+                    sh '''#!/bin/bash
+                      sleep 10   
+                      '''            
+                    }
+               
+                }
+
+            }
+        }
+
+        stage('FINAL') {
+            steps{
+                echo "This is FINAL stage "
+                sh '''
+                    sleep 5
+                    echo "this is FINAL stage"
+                    '''
+                }
+            }
+        }
+    }
