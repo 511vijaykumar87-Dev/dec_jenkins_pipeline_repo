@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     parameters{
-        booleanParam: 'DEPLOY', description: 'want to deploy to production'
+        booleanParam(name: 'DEPLOY', description: 'want to deploy to production')
     }
 
 
@@ -11,7 +11,7 @@ pipeline{
     }
 
     stages{
-        stage('STAGE1') {
+        stage('STAGE1 when branch is main') {
             when{
                 branch 'main'
             }
