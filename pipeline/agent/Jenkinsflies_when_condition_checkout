@@ -1,54 +1,66 @@
-pipeline{
+pipeline {
     agent any
 
-    parameters{
-        booleanParam(name: 'DEPLOY', description: 'want to deploy to production')
+    parameters {
+        booleanParam(name: 'DEPLOY', description: 'Want to deploy to Production')
     }
-
-
+    
     environment {
         CURRENT_ENV = 'prod'
     }
 
-    stages{
-        stage('STAGE1 when branch is main') {
-            when{
-                branch 'main'
-            }
-            steps{
-                echo "This is stage 1"
+    stages {
+        stage('CEHCKOUT_REPOA') {
+            steps {
+                checkout ([git branch: 'main', 
+                           url: 'https://github.com/511vijaykumar87-Dev/dec_jenkins_pipeline_repo.git'
+                        ])
+               
                 sh '''
-                    sleep 5
-                    echo "this is stage1"
-                    exit 1
-                    '''
-                 }
+                    echo GIT_BRANCH: $GIT_BRANCH
+                    echo BRANCH_NAME: $BRANCH_NAME
+                '''
             }
-        
-        stage('when enviroment') {
-            when{
-                environment name: 'CURRENT_ENV', value:'prod'
-            }
-            steps{
-                echo "This is FINAL stage "
-                sh '''
-                    sleep 5
-                    echo "this is FINAL stage"
-                    '''
+        }
+
+        stage('STAGE1 When branch main') {
+            when {
+                expression {
+                    return env.GIT_BRANCH == 'origin/main'
                 }
             }
+            steps {
+                echo "This is stage1 running"
+                sh ''' 
+                    pwd
+                    ls -lrt
+                    sleep 5
+                '''
+            }
+        }
+
+        stage('when environment') {
+            when {
+                environment name: 'CURRENT_ENV', value: 'prod'
+            }
+            steps {
+                echo "This is FINAL running"
+                sh '''
+                    pwd
+                    ls -lrt
+                    sleep 5
+                '''
+            }
+        }
 
         stage('when parameter') {
-            when{
-                expression{params.DEPLOY==true }
+            when {
+                expression { params.DEPLOY == true }
             }
-            steps{
-                echo "This is FINAL stage "
-                sh '''
-                    sleep 5
-                    echo "this is FINAL stage"
-                    '''
-                }
+            steps {
+                echo "This is FINAL running"
+                sh 'sleep 5'
             }
         }
     }
+}
