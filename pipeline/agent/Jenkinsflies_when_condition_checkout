@@ -12,9 +12,12 @@ pipeline {
     stages {
         stage('CEHCKOUT_REPOA') {
             steps {
-                checkout ([git branch: 'main', 
-                           url: 'https://github.com/511vijaykumar87-Dev/dec_jenkins_pipeline_repo.git'
-                        ])
+                 checkout([$class: 'GitSCM',
+                 branches: [[name: '*/main']],
+                 userRemoteConfigs: [[
+                 url: 'https://github.com/511vijaykumar87-Dev/dec_jenkins_pipeline_repo.git'
+                    ]]
+                ])
                
                 sh '''
                     echo GIT_BRANCH: $GIT_BRANCH
@@ -25,17 +28,15 @@ pipeline {
 
         stage('STAGE1 When branch main') {
             when {
-                expression {
-                    return env.GIT_BRANCH == 'origin/main'
-                }
+                    branch 'main'
             }
             steps {
-                echo "This is stage1 running"
-                sh ''' 
-                    pwd
-                    ls -lrt
-                    sleep 5
-                '''
+                     echo "This is stage1 running"
+                     sh ''' 
+                         pwd
+                         ls -lrt
+                         sleep 5
+                         '''
             }
         }
 
